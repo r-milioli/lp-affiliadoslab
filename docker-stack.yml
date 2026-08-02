@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  affiliadoslab:
+    image: automacaodebaixocusto/affiliadoslab:latest
+    environment:
+      VITE_URGENCY_TEXT: "Últimas vagas desta condição — encerra em"
+      VITE_URGENCY_SECONDS: "21600"
+      VITE_SITE_URL: "https://afiliadoslab.com"
+      VITE_CHECKOUT_URL: "#checkout"
+      VITE_PRODUCT_PRICE: "497"
+      VITE_INSTALLMENTS_TEXT: "ou 12x de R$$ 45,00 sem juros"
+      VITE_MODAL_MODE: ""
+      VITE_WHATSAPP_GROUP_URL: ""
+      VITE_LEAD_WEBHOOK_URL: ""
+    networks:
+      - network_public
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=network_public
+        - traefik.swarm.network=network_public
+
+        # HTTP -> HTTPS (também ajuda ACME httpChallenge, se o Traefik usar)
+        - traefik.http.routers.affiliadoslab-http.rule=Host(`afiliadoslab.com`)
+        - traefik.http.routers.affiliadoslab-http.entrypoints=web
+        - traefik.http.routers.affiliadoslab-http.middlewares=affiliadoslab-https-redirect
+        - traefik.http.middlewares.affiliadoslab-https-redirect.redirectscheme.scheme=https
+        - traefik.http.middlewares.affiliadoslab-https-redirect.redirectscheme.permanent=true
+
+        # HTTPS
+        - traefik.http.routers.affiliadoslab.rule=Host(`afiliadoslab.com`)
+        - traefik.http.routers.affiliadoslab.entrypoints=websecure
+        - traefik.http.routers.affiliadoslab.tls=true
+        - traefik.http.routers.affiliadoslab.tls.certresolver=letsencryptresolver
+        - traefik.http.routers.affiliadoslab.service=affiliadoslab
+
+        # Service -> container nginx :80
+        - traefik.http.services.affiliadoslab.loadbalancer.server.port=80
+        - traefik.http.services.affiliadoslab.loadbalancer.healthcheck.path=/api/health
+        - traefik.http.services.affiliadoslab.loadbalancer.healthcheck.interval=30s
+
+networks:
+  network_public:
+    external: true
