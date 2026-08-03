@@ -37,17 +37,17 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Fontes não bloqueantes: carrega sem travar FCP/LCP -->
+    <!-- Fontes não bloqueantes (media=print → ativado no main.jsx) -->
     <link
       rel="preload"
       as="style"
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Manrope:wght@400;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap"
     />
     <link
+      data-fonts
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Manrope:wght@400;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap"
       media="print"
-      onload="this.media='all'"
     />
     <noscript>
       <link
@@ -58,8 +58,8 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- defer: não bloqueia parse; roda antes do module -->
-    <script defer src="/env.js"></script>
+    <!-- Sync: precisa existir antes do React ler window.__ENV__ em produção -->
+    <script src="/env.js"></script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

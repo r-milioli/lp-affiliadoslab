@@ -1,6 +1,8 @@
 /**
  * Configuração dinâmica via variáveis de ambiente (Vite: prefixo VITE_).
  * Em Docker, os valores de runtime vêm de window.__ENV__ (gerado pelo entrypoint).
+ *
+ * Getters: lê o env no momento do uso (evita race com /env.js).
  */
 function env(key, fallback = '') {
   const runtime =
@@ -58,44 +60,49 @@ export function normalizeModalMode(raw) {
   return 'none'
 }
 
-const modalMode = normalizeModalMode(env('VITE_MODAL_MODE', ''))
-
 const siteConfig = {
-  urgencyText: env(
-    'VITE_URGENCY_TEXT',
-    'Últimas vagas desta condição — encerra em',
-  ),
-  /** Duração do timer em segundos (ex.: 21600 = 6 horas) */
-  urgencySeconds: Math.max(0, Math.floor(envNumber('VITE_URGENCY_SECONDS', 21600))),
-  siteUrl: env('VITE_SITE_URL', ''),
-  checkoutUrl: env('VITE_CHECKOUT_URL', '#checkout'),
-  productPrice: envNumber('VITE_PRODUCT_PRICE', 497),
-  /** Texto livre exibido abaixo do preço (ex.: "ou 12x de R$ 45,00 sem juros") */
-  installmentsText: env('VITE_INSTALLMENTS_TEXT', 'ou 12x de R$ 45,00 sem juros'),
-
-  /**
-   * Modal no checkout:
-   * none | lead | waitlist | beta
-   */
-  modalMode,
-  /** Obrigatório para waitlist; na página /beta (quando há vaga) */
-  whatsappGroupUrl: env('VITE_WHATSAPP_GROUP_URL', ''),
-  /**
-   * Redirect após formulário beta na landing.
-   * Ex.: https://afiliadoslab.com/beta
-   */
-  urlRedirect: env('VITE_URL_REDIRECT', ''),
-  /** Capacidade máxima do grupo beta (página /beta) */
-  betaCapacity: Math.max(0, Math.floor(envNumber('VITE_BETA_CAPACITY', 20))),
-  /** Webhook que retorna o quantitativo atual de participantes do beta */
-  betaWebhookUrl: env('VITE_BETA_WEBHOOK_URL', ''),
-  /** Webhook para POST dos leads/voluntários (JSON) */
-  leadWebhookUrl: env('VITE_LEAD_WEBHOOK_URL', ''),
-
-  /** Meta Pixel ID (ex.: 123456789012345). Vazio = Pixel desligado */
-  metaPixelId: env('VITE_META_PIXEL_ID', ''),
-  /** Google Analytics 4 Measurement ID (ex.: G-XXXXXXXXXX). Vazio = GA4 desligado */
-  gaMeasurementId: env('VITE_GA_MEASUREMENT_ID', ''),
+  get urgencyText() {
+    return env('VITE_URGENCY_TEXT', 'Últimas vagas desta condição — encerra em')
+  },
+  get urgencySeconds() {
+    return Math.max(0, Math.floor(envNumber('VITE_URGENCY_SECONDS', 21600)))
+  },
+  get siteUrl() {
+    return env('VITE_SITE_URL', '')
+  },
+  get checkoutUrl() {
+    return env('VITE_CHECKOUT_URL', '#checkout')
+  },
+  get productPrice() {
+    return envNumber('VITE_PRODUCT_PRICE', 497)
+  },
+  get installmentsText() {
+    return env('VITE_INSTALLMENTS_TEXT', 'ou 12x de R$ 45,00 sem juros')
+  },
+  get modalMode() {
+    return normalizeModalMode(env('VITE_MODAL_MODE', ''))
+  },
+  get whatsappGroupUrl() {
+    return env('VITE_WHATSAPP_GROUP_URL', '')
+  },
+  get urlRedirect() {
+    return env('VITE_URL_REDIRECT', '')
+  },
+  get betaCapacity() {
+    return Math.max(0, Math.floor(envNumber('VITE_BETA_CAPACITY', 20)))
+  },
+  get betaWebhookUrl() {
+    return env('VITE_BETA_WEBHOOK_URL', '')
+  },
+  get leadWebhookUrl() {
+    return env('VITE_LEAD_WEBHOOK_URL', '')
+  },
+  get metaPixelId() {
+    return env('VITE_META_PIXEL_ID', '')
+  },
+  get gaMeasurementId() {
+    return env('VITE_GA_MEASUREMENT_ID', '')
+  },
 }
 
 export default siteConfig

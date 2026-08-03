@@ -4,6 +4,11 @@ import App from './App.jsx'
 import BetaPage from './pages/BetaPage.jsx'
 import './styles.css'
 
+// Ativa CSS das fontes carregado com media=print (não bloqueia render inicial)
+document.querySelectorAll('link[data-fonts]').forEach((link) => {
+  link.media = 'all'
+})
+
 function resolveRoute() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/'
   if (path === '/beta' || path.endsWith('/beta')) return 'beta'
