@@ -13,6 +13,8 @@ services:
       VITE_MODAL_MODE: ""
       VITE_WHATSAPP_GROUP_URL: ""
       VITE_LEAD_WEBHOOK_URL: ""
+      VITE_META_PIXEL_ID: ""
+      VITE_GA_MEASUREMENT_ID: ""
     networks:
       - network_public
     deploy:

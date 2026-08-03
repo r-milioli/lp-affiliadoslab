@@ -1,5 +1,6 @@
 import { useEffect, useId, useState } from 'react'
 import siteConfig from '../config/site'
+import { trackLead } from '../lib/analytics'
 
 const MODAL_COPY = {
   lead: {
@@ -169,6 +170,7 @@ export default function ActionModal({ open, mode, onClose, onGoCheckout, onGoWha
           source: 'afiliadoslab-landpage',
           createdAt: new Date().toISOString(),
         })
+        trackLead({ lead_type: copy.kind })
       }
 
       if (mode === 'lead') onGoCheckout()

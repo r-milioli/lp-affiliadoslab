@@ -1,4 +1,5 @@
 import { CheckoutProvider } from './context/CheckoutContext'
+import Analytics from './components/Analytics'
 import Header from './components/Header'
 import FlowRail from './components/FlowRail'
 import Hero from './components/Hero'
@@ -17,6 +18,7 @@ import Footer from './components/Footer'
 export default function App() {
   return (
     <CheckoutProvider>
+      <Analytics />
       <Header />
       <main id="top">
         <FlowRail />

@@ -82,6 +82,11 @@ const siteConfig = {
   whatsappGroupUrl: env('VITE_WHATSAPP_GROUP_URL', ''),
   /** Webhook para POST dos leads/voluntários (JSON) */
   leadWebhookUrl: env('VITE_LEAD_WEBHOOK_URL', ''),
+
+  /** Meta Pixel ID (ex.: 123456789012345). Vazio = Pixel desligado */
+  metaPixelId: env('VITE_META_PIXEL_ID', ''),
+  /** Google Analytics 4 Measurement ID (ex.: G-XXXXXXXXXX). Vazio = GA4 desligado */
+  gaMeasurementId: env('VITE_GA_MEASUREMENT_ID', ''),
 }
 
 export default siteConfig

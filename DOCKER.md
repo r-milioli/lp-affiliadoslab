@@ -33,6 +33,8 @@ docker stack deploy -c docker-stack.yml affiliadoslab
 | `VITE_MODAL_MODE` | `lead` \| `waitlist` \| `beta` \| vazio |
 | `VITE_WHATSAPP_GROUP_URL` | Grupo WhatsApp (waitlist/beta) |
 | `VITE_LEAD_WEBHOOK_URL` | Webhook POST JSON de captura |
+| `VITE_META_PIXEL_ID` | Meta Pixel ID (vazio = desligado) |
+| `VITE_GA_MEASUREMENT_ID` | GA4 Measurement ID `G-...` (vazio = desligado) |
 
 As variáveis entram na **stack** e são aplicadas em runtime via `/env.js` (não precisam rebuild para mudar copy/preço/modal).
 

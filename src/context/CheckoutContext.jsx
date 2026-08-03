@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import siteConfig from '../config/site'
 import ActionModal from '../components/ActionModal'
+import { trackCheckoutClick } from '../lib/analytics'
 
 const CheckoutContext = createContext(null)
 
@@ -18,6 +19,7 @@ export function CheckoutProvider({ children }) {
   const mode = siteConfig.modalMode
 
   const requestCheckout = useCallback(() => {
+    trackCheckoutClick({ modal_mode: mode })
     if (mode === 'none') {
       goToUrl(siteConfig.checkoutUrl)
       return
