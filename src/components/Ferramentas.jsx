@@ -3,12 +3,12 @@ import Reveal from './Reveal'
 import ToolModal from './ToolModal'
 import { IconArrow, IconCheck } from './Icons'
 import { toolsDetails } from '../data/toolsDetails'
-import imgProvision from '../assets/provision.svg'
-import imgWavro from '../assets/wavro.svg'
-import imgMultilink from '../assets/multilink.svg'
-import imgZynklink from '../assets/zynklink.svg'
-import imgSmartShowcase from '../assets/smartShowcase.svg'
-import imgFluxclick from '../assets/fluxclik.svg'
+import imgProvision from '../assets/provision.webp'
+import imgWavro from '../assets/wavro.webp'
+import imgMultilink from '../assets/multilink.webp'
+import imgZynklink from '../assets/zynklink.webp'
+import imgSmartShowcase from '../assets/smartShowcase.webp'
+import imgFluxclick from '../assets/fluxclik.webp'
 
 const tools = [
   {

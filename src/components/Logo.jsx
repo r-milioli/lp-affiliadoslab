@@ -1,4 +1,4 @@
-import logo from '../assets/logo-magnific.png'
+import logo from '../assets/logo-magnific.webp'
 
 export default function Logo({ href = '#top', variant = 'header' }) {
   if (variant === 'hero') {

@@ -1,4 +1,4 @@
-import heroImage from '../assets/hero-ecossistema.jpg'
+import heroImage from '../assets/hero-ecossistema.webp'
 import Reveal from './Reveal'
 import { IconArrow } from './Icons'
 

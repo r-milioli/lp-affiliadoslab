@@ -1,7 +1,9 @@
 import Reveal from './Reveal'
-import { IconArrow, IconCheck, IconShield } from './Icons'
+import { IconArrow, IconCheck } from './Icons'
 import siteConfig, { formatPriceBRL } from '../config/site'
 import { CheckoutButton } from '../context/CheckoutContext'
+import garantiaSeal from '../assets/garantias.webp'
+import garantiaBg from '../assets/garantia-bg.webp'
 
 const includes = [
   { t: 'Provision', d: 'Instalação automática de todo o ecossistema' },
@@ -79,10 +81,19 @@ export default function Oferta() {
             </CheckoutButton>
 
             <div className="pricing-guarantee">
-              <div className="pricing-guarantee-icon">
-                <IconShield />
-              </div>
-              <div>
+              <img
+                className="pricing-guarantee-bg"
+                src={garantiaBg}
+                alt=""
+                aria-hidden="true"
+              />
+              <img
+                className="pricing-guarantee-seal"
+                src={garantiaSeal}
+                alt="Selo de garantia de 7 dias"
+              />
+              <div className="pricing-guarantee-copy">
+                <span className="pricing-guarantee-tag">Risco zero</span>
                 <strong>Garantia incondicional de 7 dias</strong>
                 <p>
                   Se não fizer sentido para a sua operação, você pede o reembolso em até 7 dias — sem letra miúda para dificultar.
