@@ -31,7 +31,10 @@ docker stack deploy -c docker-stack.yml affiliadoslab
 | `VITE_PRODUCT_PRICE` | Preço (número) |
 | `VITE_INSTALLMENTS_TEXT` | Texto de parcelas |
 | `VITE_MODAL_MODE` | `lead` \| `waitlist` \| `beta` \| vazio |
-| `VITE_WHATSAPP_GROUP_URL` | Grupo WhatsApp (waitlist/beta) |
+| `VITE_WHATSAPP_GROUP_URL` | Grupo WhatsApp (waitlist e página `/beta` com vaga) |
+| `VITE_URL_REDIRECT` | Redirect após formulário beta (ex.: `https://afiliadoslab.com/beta`) |
+| `VITE_BETA_CAPACITY` | Capacidade máxima do grupo beta |
+| `VITE_BETA_WEBHOOK_URL` | Webhook POST do quantitativo (proxied em `/api/beta-slots` para evitar CORS) |
 | `VITE_LEAD_WEBHOOK_URL` | Webhook POST JSON de captura |
 | `VITE_META_PIXEL_ID` | Meta Pixel ID (vazio = desligado) |
 | `VITE_GA_MEASUREMENT_ID` | GA4 Measurement ID `G-...` (vazio = desligado) |

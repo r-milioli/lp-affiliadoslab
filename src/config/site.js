@@ -78,8 +78,17 @@ const siteConfig = {
    * none | lead | waitlist | beta
    */
   modalMode,
-  /** Obrigatório para waitlist e beta */
+  /** Obrigatório para waitlist; na página /beta (quando há vaga) */
   whatsappGroupUrl: env('VITE_WHATSAPP_GROUP_URL', ''),
+  /**
+   * Redirect após formulário beta na landing.
+   * Ex.: https://afiliadoslab.com/beta
+   */
+  urlRedirect: env('VITE_URL_REDIRECT', ''),
+  /** Capacidade máxima do grupo beta (página /beta) */
+  betaCapacity: Math.max(0, Math.floor(envNumber('VITE_BETA_CAPACITY', 20))),
+  /** Webhook que retorna o quantitativo atual de participantes do beta */
+  betaWebhookUrl: env('VITE_BETA_WEBHOOK_URL', ''),
   /** Webhook para POST dos leads/voluntários (JSON) */
   leadWebhookUrl: env('VITE_LEAD_WEBHOOK_URL', ''),
 

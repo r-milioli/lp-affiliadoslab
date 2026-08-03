@@ -38,8 +38,8 @@ const MODAL_COPY = {
     text: (
       <>
         Estamos validando o ecossistema AfiliadosLAB com um grupo selecionado.
-        Cadastre-se como <strong>voluntário de teste</strong> e entre no grupo de WhatsApp
-        para receber o acesso e as orientações.
+        Cadastre-se como <strong>voluntário de teste</strong> e avance para a
+        verificação de vagas do grupo beta.
       </>
     ),
     cta: 'Quero ser voluntário',
@@ -98,7 +98,7 @@ async function submitLead(payload) {
   return { ok: true }
 }
 
-export default function ActionModal({ open, mode, onClose, onGoCheckout, onGoWhatsApp }) {
+export default function ActionModal({ open, mode, onClose, onGoCheckout, onGoWhatsApp, onGoRedirect }) {
   const titleId = useId()
   const copy = MODAL_COPY[mode]
   const [form, setForm] = useState(emptyForm)
@@ -131,8 +131,11 @@ export default function ActionModal({ open, mode, onClose, onGoCheckout, onGoWha
 
   if (!open || !copy) return null
 
-  const needsWhatsApp = mode === 'waitlist' || mode === 'beta'
+  const needsWhatsApp = mode === 'waitlist'
+  const needsRedirect = mode === 'beta'
   const missingWhatsApp = needsWhatsApp && !siteConfig.whatsappGroupUrl
+  const missingRedirect = needsRedirect && !siteConfig.urlRedirect
+  const missingConfig = missingWhatsApp || missingRedirect
 
   const onChange = (field) => (e) => {
     let value = e.target.value
@@ -157,6 +160,11 @@ export default function ActionModal({ open, mode, onClose, onGoCheckout, onGoWha
       return
     }
 
+    if (missingRedirect) {
+      setSubmitError('Configure VITE_URL_REDIRECT no .env para o fluxo beta.')
+      return
+    }
+
     setSubmitting(true)
     setSubmitError('')
 
@@ -174,6 +182,7 @@ export default function ActionModal({ open, mode, onClose, onGoCheckout, onGoWha
       }
 
       if (mode === 'lead') onGoCheckout()
+      else if (mode === 'beta') onGoRedirect()
       else onGoWhatsApp()
     } catch (err) {
       setSubmitError(err.message || 'Não foi possível enviar. Tente novamente.')
@@ -226,6 +235,12 @@ export default function ActionModal({ open, mode, onClose, onGoCheckout, onGoWha
           {missingWhatsApp && (
             <p className="action-modal-alert">
               Falta configurar o link do grupo WhatsApp (`VITE_WHATSAPP_GROUP_URL`).
+            </p>
+          )}
+
+          {missingRedirect && (
+            <p className="action-modal-alert">
+              Falta configurar o redirect do beta (`VITE_URL_REDIRECT`).
             </p>
           )}
 
@@ -285,7 +300,7 @@ export default function ActionModal({ open, mode, onClose, onGoCheckout, onGoWha
               <button
                 type="submit"
                 className="btn btn-primary action-modal-cta"
-                disabled={submitting || missingWhatsApp}
+                disabled={submitting || missingConfig}
               >
                 {submitting ? 'Enviando…' : copy.cta}
                 {!submitting && (

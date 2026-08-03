@@ -338,13 +338,27 @@ ul{ margin:0; padding:0; list-style:none; }
   position: relative;
   isolation: isolate;
   background-color: var(--bg-deep);
-  background-image:
+}
+.hero-media{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
     linear-gradient(105deg, rgba(10,13,10,0.94) 0%, rgba(10,13,10,0.82) 38%, rgba(10,13,10,0.45) 68%, rgba(10,13,10,0.55) 100%),
-    radial-gradient(720px 480px at 82% 4%, rgba(200,255,77,0.12), transparent 60%),
-    var(--hero-image);
-  background-size: cover;
-  background-position: center right;
-  background-repeat: no-repeat;
+    radial-gradient(720px 480px at 82% 4%, rgba(200,255,77,0.12), transparent 60%);
 }
 .hero::after{
   content:"";
@@ -434,10 +448,13 @@ ul{ margin:0; padding:0; list-style:none; }
     min-height: auto;
     padding-top: clamp(132px, 28vw, 160px);
     padding-bottom: clamp(56px, 12vw, 80px);
-    background-position: 70% center;
-    background-image:
-      linear-gradient(180deg, rgba(10,13,10,0.9) 0%, rgba(10,13,10,0.82) 42%, rgba(10,13,10,0.94) 100%),
-      var(--hero-image);
+  }
+  .hero-media{
+    object-position: 70% center;
+  }
+  .hero::before{
+    background:
+      linear-gradient(180deg, rgba(10,13,10,0.9) 0%, rgba(10,13,10,0.82) 42%, rgba(10,13,10,0.94) 100%);
   }
   .hero h1{
     max-width: none;
@@ -2215,4 +2232,195 @@ html{
   .pricing-value{
     font-size: 40px;
   }
+}
+
+/* ==========================================================================
+   17. BETA PAGE (/beta)
+   ========================================================================== */
+.beta-page{
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(900px 500px at 15% 0%, rgba(200,255,77,0.06), transparent 55%),
+    radial-gradient(800px 600px at 100% 40%, rgba(52,226,176,0.05), transparent 55%),
+    var(--bg);
+}
+.beta-page-top{
+  border-bottom: 1px solid var(--line);
+  background: rgba(10,13,10,0.78);
+  backdrop-filter: blur(14px) saturate(1.4);
+}
+.beta-page-top-inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  flex-wrap: wrap;
+}
+.beta-page-home{
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: transparent;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+.beta-page-home:hover{
+  color: var(--coral-deep);
+  text-decoration-color: rgba(200,255,77,0.5);
+}
+.beta-page-main{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: clamp(40px, 8vw, 80px) 0;
+}
+.beta-page-card{
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+.beta-page-card h1{
+  margin-top: 16px;
+  font-size: clamp(24px, 5vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+.beta-page-card > p{
+  margin-top: 16px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+.beta-page-cta{
+  margin-top: 28px;
+  justify-content: center;
+}
+.beta-page-cta svg{
+  width: 16px;
+  height: 16px;
+}
+.beta-page-note{
+  margin-top: 18px !important;
+  font-size: 12.5px !important;
+  color: var(--ink-faint) !important;
+}
+
+.beta-check-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  background:
+    radial-gradient(700px 420px at 20% 0%, rgba(200,255,77,0.1), transparent 55%),
+    radial-gradient(640px 420px at 90% 100%, rgba(52,226,176,0.1), transparent 55%),
+    rgba(6, 8, 6, 0.92);
+  backdrop-filter: blur(14px) saturate(1.2);
+  animation: toolModalFade 0.22s ease;
+}
+.beta-check-modal{
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 20px;
+}
+.beta-check-glow{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(480px 260px at 50% 30%, rgba(200,255,77,0.1), transparent 60%);
+}
+.beta-check-panel{
+  position: relative;
+  z-index: 1;
+  width: min(480px, 100%);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.beta-check-badge{
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--coral-deep);
+  border: 1px solid rgba(200,255,77,0.32);
+  background: rgba(200,255,77,0.08);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+.beta-check-badge--warn{
+  color: #ffb4b4;
+  border-color: rgba(255,123,123,0.35);
+  background: rgba(255,80,80,0.08);
+}
+.beta-check-panel h2{
+  font-size: clamp(22px, 4vw, 30px);
+  line-height: 1.15;
+}
+.beta-check-label,
+.beta-check-message{
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 38ch;
+}
+.beta-check-hint{
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+.beta-check-spinner{
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: var(--coral-deep);
+  border-right-color: var(--mint);
+  animation: betaSpin 0.85s linear infinite;
+  margin-bottom: 6px;
+}
+@keyframes betaSpin{
+  to{ transform: rotate(360deg); }
+}
+.beta-check-progress{
+  width: min(320px, 100%);
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.beta-check-progress span{
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--coral), var(--mint));
+  transition: width 0.35s ease;
+}
+.beta-check-actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 6px;
+}
+@media (prefers-reduced-motion: reduce){
+  .beta-check-spinner{ animation: none; border-top-color: var(--coral-deep); }
+}
+@media (max-width: 720px){
+  .beta-page-cta{ width: 100%; }
+  .beta-page-card{ text-align: center; }
 }

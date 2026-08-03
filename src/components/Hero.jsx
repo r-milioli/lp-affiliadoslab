@@ -4,10 +4,16 @@ import { IconArrow } from './Icons'
 
 export default function Hero() {
   return (
-    <section
-      className="hero"
-      style={{ '--hero-image': `url(${heroImage})` }}
-    >
+    <section className="hero">
+      <img
+        className="hero-media"
+        src={heroImage}
+        alt=""
+        width={1408}
+        height={912}
+        decoding="async"
+        fetchPriority="high"
+      />
       <div className="container">
         <Reveal className="hero-content">
           <h1>

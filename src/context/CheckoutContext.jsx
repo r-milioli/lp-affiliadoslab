@@ -5,13 +5,13 @@ import { trackCheckoutClick } from '../lib/analytics'
 
 const CheckoutContext = createContext(null)
 
-function goToUrl(url) {
+export function goToUrl(url, { sameTab = false } = {}) {
   if (!url) return
-  if (/^https?:\/\//i.test(url)) {
-    window.open(url, '_blank', 'noopener,noreferrer')
+  if (sameTab || !/^https?:\/\//i.test(url)) {
+    window.location.assign(url)
     return
   }
-  window.location.href = url
+  window.open(url, '_blank', 'noopener,noreferrer')
 }
 
 export function CheckoutProvider({ children }) {
@@ -53,6 +53,10 @@ export function CheckoutProvider({ children }) {
           onGoWhatsApp={() => {
             setOpen(false)
             goToUrl(siteConfig.whatsappGroupUrl)
+          }}
+          onGoRedirect={() => {
+            setOpen(false)
+            goToUrl(siteConfig.urlRedirect, { sameTab: true })
           }}
         />
       )}
