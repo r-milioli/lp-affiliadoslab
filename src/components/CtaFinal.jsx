@@ -1,3 +1,4 @@
+import siteConfig from '../config/site'
 import Reveal from './Reveal'
 import { IconArrow } from './Icons'
 import { CheckoutButton } from '../context/CheckoutContext'
@@ -14,7 +15,7 @@ export default function CtaFinal() {
           </Reveal>
           <Reveal className="hero-cta-row">
             <CheckoutButton className="btn btn-primary">
-              Quero ativar o kit completo
+              {siteConfig.ctaLabel('Quero ativar o kit completo')}
               <IconArrow />
             </CheckoutButton>
           </Reveal>

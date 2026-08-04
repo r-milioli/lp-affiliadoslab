@@ -76,7 +76,7 @@ export default function Oferta() {
             <p className="pricing-note">Pagamento único — sem mensalidade escondida de ferramenta genérica.</p>
 
             <CheckoutButton className="btn btn-primary pricing-cta">
-              Quero ativar o kit agora
+              {siteConfig.ctaLabel('Quero ativar o kit agora')}
               <IconArrow />
             </CheckoutButton>
 

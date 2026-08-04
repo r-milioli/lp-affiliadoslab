@@ -62,7 +62,7 @@ export default function Header() {
         </div>
         <div className="header-cta">
           <CheckoutButton className="btn btn-outline-neon">
-            Quero o kit completo
+            {siteConfig.ctaLabel('Quero o kit completo')}
           </CheckoutButton>
         </div>
       </div>

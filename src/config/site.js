@@ -82,6 +82,10 @@ const siteConfig = {
   get modalMode() {
     return normalizeModalMode(env('VITE_MODAL_MODE', ''))
   },
+  /** Label dos CTAs principais quando VITE_MODAL_MODE=beta; senão usa o fallback. */
+  ctaLabel(fallback) {
+    return this.modalMode === 'beta' ? 'Seja o usuário beta test' : fallback
+  },
   get whatsappGroupUrl() {
     return env('VITE_WHATSAPP_GROUP_URL', '')
   },

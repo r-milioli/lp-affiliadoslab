@@ -2251,13 +2251,15 @@ html{
   border-bottom: 1px solid var(--line);
   background: rgba(10,13,10,0.78);
   backdrop-filter: blur(14px) saturate(1.4);
+  padding-top: env(safe-area-inset-top, 0px);
 }
 .beta-page-top-inner{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 16px 0;
+  gap: 12px 16px;
+  /* só vertical — lateral vem do .container (var(--gutter)) */
+  padding-block: 16px;
   flex-wrap: wrap;
 }
 .beta-page-home{
@@ -2268,6 +2270,7 @@ html{
   text-underline-offset: 3px;
   text-decoration-color: transparent;
   transition: color 0.2s ease, text-decoration-color 0.2s ease;
+  white-space: nowrap;
 }
 .beta-page-home:hover{
   color: var(--coral-deep);
@@ -2278,17 +2281,21 @@ html{
   display: flex;
   align-items: center;
   padding: clamp(40px, 8vw, 80px) 0;
+  padding-bottom: calc(clamp(40px, 8vw, 80px) + env(safe-area-inset-bottom, 0px));
 }
 .beta-page-card{
   max-width: 640px;
   margin: 0 auto;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 .beta-page-card h1{
   margin-top: 16px;
   font-size: clamp(24px, 5vw, 36px);
   line-height: 1.15;
   letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 .beta-page-card > p{
   margin-top: 16px;
@@ -2303,6 +2310,7 @@ html{
 .beta-page-cta svg{
   width: 16px;
   height: 16px;
+  flex-shrink: 0;
 }
 .beta-page-note{
   margin-top: 18px !important;
@@ -2328,10 +2336,16 @@ html{
   position: relative;
   width: 100%;
   min-height: 100%;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 28px 20px;
+  padding-top: max(28px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(28px, env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
 .beta-check-glow{
   position: absolute;
@@ -2349,6 +2363,7 @@ html{
   flex-direction: column;
   align-items: center;
   gap: 14px;
+  box-sizing: border-box;
 }
 .beta-check-badge{
   font-family: var(--font-mono);
@@ -2416,11 +2431,94 @@ html{
   gap: 10px;
   justify-content: center;
   margin-top: 6px;
+  width: 100%;
+}
+.beta-check-panel > .btn{
+  max-width: 100%;
 }
 @media (prefers-reduced-motion: reduce){
   .beta-check-spinner{ animation: none; border-top-color: var(--coral-deep); }
 }
 @media (max-width: 720px){
-  .beta-page-cta{ width: 100%; }
-  .beta-page-card{ text-align: center; }
+  .beta-page-top-inner{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    padding-block: 14px;
+  }
+  .beta-page-top-inner .logo{
+    justify-content: center;
+  }
+  .beta-page-home{
+    white-space: normal;
+    font-size: 12px;
+  }
+  .beta-page-main{
+    align-items: flex-start;
+    padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0px));
+  }
+  .beta-page-card{
+    text-align: center;
+  }
+  .beta-page-card h1{
+    font-size: clamp(22px, 7vw, 28px);
+    margin-top: 12px;
+  }
+  .beta-page-card > p{
+    font-size: 14px;
+    margin-top: 12px;
+  }
+  .beta-page-cta{
+    width: 100%;
+    min-height: 48px;
+    padding-inline: 16px;
+  }
+  .beta-page-note{
+    font-size: 12px !important;
+    padding-inline: 4px;
+  }
+  .beta-check-modal{
+    align-items: flex-start;
+    padding: 24px 16px;
+    padding-top: max(24px, env(safe-area-inset-top, 0px));
+    padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
+  }
+  .beta-check-panel{
+    margin-block: auto;
+    gap: 12px;
+    width: 100%;
+  }
+  .beta-check-panel h2{
+    font-size: clamp(22px, 6.5vw, 28px);
+  }
+  .beta-check-label,
+  .beta-check-message{
+    font-size: 14px;
+    max-width: none;
+    width: 100%;
+  }
+  .beta-check-progress{
+    width: 100%;
+  }
+  .beta-check-actions{
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .beta-check-actions .btn,
+  .beta-check-panel > .btn{
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+  }
+}
+@media (max-width: 380px){
+  .beta-page-top-inner .logo{
+    font-size: 15px;
+  }
+  .beta-page-card h1{
+    font-size: 20px;
+  }
 }
